@@ -19,7 +19,7 @@ $(PLUGIN): $(SOURCES) $(DEPS_TARGET)
 
 pkg: .pkg-stamp
 
-.pkg-stamp: $(PLUGIN) build-pkg.sh
+.pkg-stamp: $(PLUGIN) LICENSE build-pkg.sh
 	./build-pkg.sh
 
 clean:
