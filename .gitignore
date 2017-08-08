@@ -1,2 +1,3 @@
 *.so
-deadbeef.h
+deadbeef/*
+.deps-stamp

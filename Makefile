@@ -16,3 +16,13 @@ install: $(PLUGIN)
 
 uninstall:
 	rm $(DESTDIR)/$(PLUGIN)
+
+get-deps: .deps-stamp
+
+.deps-stamp: get-deps.sh
+	./get-deps.sh
+
+clean-deps:
+	rm -rf deadbeef
+
+.PHONY: clean install uninstall get-deps clean-deps
