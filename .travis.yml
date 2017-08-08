@@ -6,5 +6,5 @@ compiler:
 - clang
 - gcc
 env:
-- CFLAGS=-O2 -Werror
-- CFLAGS=-O2 -Werror -m32
+- CFLAGS="-O2 -Werror"
+- CFLAGS="-O2 -Werror -m32"
