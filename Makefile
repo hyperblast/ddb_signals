@@ -1,4 +1,4 @@
-CFLAGS  += -std=c99 -fPIC -Wall
+CFLAGS  += -std=c99 -fPIC -Wall -I.
 LDFLAGS += -Wl,--no-undefined
 
 SOURCES := signals.c
