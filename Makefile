@@ -38,7 +38,6 @@ get-deps: .deps-stamp
 	./get-deps.sh
 
 clean-deps:
-	rm -f .deps-stamp
-	rm -rf deadbeef
+	./get-deps.sh --clean
 
 .PHONY: plugin pkg clean install uninstall get-deps clean-deps
