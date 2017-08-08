@@ -23,6 +23,7 @@ get-deps: .deps-stamp
 	./get-deps.sh
 
 clean-deps:
+	rm -f .deps-stamp
 	rm -rf deadbeef
 
 .PHONY: clean install uninstall get-deps clean-deps
