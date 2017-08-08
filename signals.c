@@ -22,7 +22,7 @@
 #endif
 
 #define LICENSE_TEXT \
-    "Copyright 2016 Hyperblast\n" \
+    "Copyright 2016-2017 Hyperblast\n" \
     "\n" \
     "Permission is hereby granted, free of charge, to any person obtaining a copy\n" \
     "of this software and associated documentation files (the \"Software\"), to deal\n" \
@@ -216,8 +216,8 @@ static DB_misc_t plugin_def =
     {
         .api_vmajor = 1,
         .api_vminor = DDB_API_LEVEL,
-        .version_major = 0,
-        .version_minor = 1,
+        .version_major = 1,
+        .version_minor = 0,
         .type = DB_PLUGIN_MISC,
         .id = "signals",
         .name = "Signals support",
