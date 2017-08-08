@@ -4,7 +4,7 @@ This plugin adds clean shutdown on `SIGTERM` and `SIGINT` to DeaDBeeF.
 
 How to build
 ---
-`CFLAGS=-I/opt/deadbeef/include make` will build the plugin file. If you have `deadbeef.h` in different directory adjust `CFLAGS` accordingly. Make sure you have build tools installed.
+`make` will build the plugin file. Make sure you have build tools installed.
 
 How to install
 ---
