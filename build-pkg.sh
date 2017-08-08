@@ -6,6 +6,15 @@ pkg_name=ddb_signals
 plugin=signals.so
 version=1.0
 
+function clean {
+    rm -f .pkg-stamp $pkg_name-*.tar.gz
+}
+
+if [ "$1" == "--clean" ]; then
+    clean
+    exit 0
+fi
+
 test -e $plugin
 
 file_info=$(file $plugin)
@@ -18,6 +27,6 @@ else
     arch=unknown
 fi
 
-rm -f $pkg_name-*.tar.gz
+clean
 tar czf $pkg_name-$version-$arch.tar.gz $plugin LICENSE
 touch .pkg-stamp

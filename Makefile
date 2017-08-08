@@ -23,7 +23,8 @@ pkg: .pkg-stamp
 	./build-pkg.sh
 
 clean:
-	rm -f $(PLUGIN) .pkg-stamp *.tar.gz
+	rm -f $(PLUGIN)
+	./build-pkg.sh --clean
 
 install: $(PLUGIN)
 	install -D $(PLUGIN) $(DESTDIR)/$(PLUGIN)
