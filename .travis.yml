@@ -1,0 +1,10 @@
+sudo: false
+dist: trusty
+language: c
+script: make pkg
+compiler:
+- clang
+- gcc
+env:
+- CFLAGS=-O2 -Werror
+- CFLAGS=-O2 -Werror -m32
