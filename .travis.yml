@@ -1,5 +1,5 @@
-sudo: false
 dist: trusty
+sudo: false
 language: c
 script: make pkg
 compiler:
@@ -8,3 +8,7 @@ compiler:
 env:
 - CFLAGS="-O2 -Werror"
 - CFLAGS="-O2 -Werror -m32"
+addons:
+  apt:
+    packages:
+    - gcc-multilib
