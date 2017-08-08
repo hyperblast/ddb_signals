@@ -17,12 +17,13 @@ plugin: $(PLUGIN)
 $(PLUGIN): $(SOURCES) $(DEPS_TARGET)
 	$(CC) $(CFLAGS) $(LDFLAGS) -shared -o $(PLUGIN) $(SOURCES)
 
-pkg: $(PLUGIN)
+pkg: .pkg-stamp
+
+.pkg-stamp: $(PLUGIN) build-pkg.sh
 	./build-pkg.sh
 
 clean:
-	rm -f $(PLUGIN)
-	rm -f *.tar.gz
+	rm -f $(PLUGIN) .pkg-stamp *.tar.gz
 
 install: $(PLUGIN)
 	install -D $(PLUGIN) $(DESTDIR)/$(PLUGIN)

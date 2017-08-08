@@ -20,3 +20,4 @@ fi
 
 rm -f $pkg_name-*.tar.gz
 tar czf $pkg_name-$version-$arch.tar.gz $plugin LICENSE
+touch .pkg-stamp
