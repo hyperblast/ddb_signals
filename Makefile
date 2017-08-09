@@ -30,10 +30,11 @@ clean:
 	scripts/build-pkg.sh --clean
 
 install: $(PLUGIN)
-	install -D $(PLUGIN) $(DESTDIR)/$(PLUGIN)
+	mkdir -p $(DESTDIR)
+	cp -t $(DESTDIR) $(PLUGIN)
 
 uninstall:
-	rm $(DESTDIR)/$(PLUGIN)
+	rm $(DESTDIR)/signals.so
 
 get-deps: $(DEPS_STAMP)
 
