@@ -108,8 +108,7 @@ static void send_notify(int flag)
 {
     atomic_or(&notify_flags, flag);
 
-    if (write(notify_pipe[1], "Y", 1) < 0)
-        log_error("write failed: %s\n", strerror(errno));
+    (void) write(notify_pipe[1], "Y", 1);
 }
 
 static void handle_signal(int signum)
