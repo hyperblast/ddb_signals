@@ -2,7 +2,7 @@
 
 set -e
 
-if [ "$VERBOSE" != "" ]; then
+if [ -n "$VERBOSE" ]; then
     set -v
 fi
 
