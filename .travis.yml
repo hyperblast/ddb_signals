@@ -1,7 +1,7 @@
 dist: trusty
 sudo: false
 language: c
-script: CFLAGS="-O2 -Werror -Wno-unused-result $CFLAGS_EXTRA" make pkg
+script: VERBOSE=1 CFLAGS="-O2 -Werror -Wno-unused-result $CFLAGS_EXTRA" make pkg
 compiler:
 - clang
 - gcc

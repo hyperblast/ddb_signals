@@ -1,6 +1,10 @@
 #!/bin/bash
 
-set -ve
+set -e
+
+if [ "$VERBOSE" != "" ]; then
+    set -v
+fi
 
 cd "$(dirname $0)/.."
 
