@@ -1,5 +1,2 @@
-*.so
-*.tar.gz
-deadbeef/*
-.deps-stamp
-.pkg-stamp
+build/*
+deps/*

@@ -1,30 +1,33 @@
 CFLAGS  += -std=c99 -fPIC -Wall
 LDFLAGS += -Wl,--no-undefined
 
-SOURCES := signals.c
-PLUGIN  := signals.so
-DESTDIR ?= ~/.local/lib/deadbeef
+SOURCES     := src/signals.c
+PLUGIN      := build/signals.so
+DEPS_STAMP  := deps/.stamp
+PKG_STAMP   := build/pkg/.stamp
+DESTDIR     ?= ~/.local/lib/deadbeef
 
 ifdef NO_DEPS
 DEPS_TARGET :=
 else
-CFLAGS      += -I.
-DEPS_TARGET := .deps-stamp
+CFLAGS      += -Ideps
+DEPS_TARGET := $(DEPS_STAMP)
 endif
 
 plugin: $(PLUGIN)
 
 $(PLUGIN): $(SOURCES) $(DEPS_TARGET)
+	mkdir -p build
 	$(CC) $(CFLAGS) $(LDFLAGS) -shared -o $(PLUGIN) $(SOURCES)
 
-pkg: .pkg-stamp
+pkg: $(PKG_STAMP)
 
-.pkg-stamp: $(PLUGIN) LICENSE build-pkg.sh
-	./build-pkg.sh
+$(PKG_STAMP): $(PLUGIN) LICENSE scripts/build-pkg.sh
+	scripts/build-pkg.sh
 
 clean:
 	rm -f $(PLUGIN)
-	./build-pkg.sh --clean
+	scripts/build-pkg.sh --clean
 
 install: $(PLUGIN)
 	install -D $(PLUGIN) $(DESTDIR)/$(PLUGIN)
@@ -32,12 +35,12 @@ install: $(PLUGIN)
 uninstall:
 	rm $(DESTDIR)/$(PLUGIN)
 
-get-deps: .deps-stamp
+get-deps: $(DEPS_STAMP)
 
-.deps-stamp: get-deps.sh
-	./get-deps.sh
+$(DEPS_STAMP): scripts/get-deps.sh
+	scripts/get-deps.sh
 
 clean-deps:
-	./get-deps.sh --clean
+	scripts/get-deps.sh --clean
 
 .PHONY: plugin pkg clean install uninstall get-deps clean-deps
