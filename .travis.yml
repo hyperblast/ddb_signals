@@ -1,13 +1,13 @@
 dist: trusty
 sudo: false
 language: c
-script: make pkg
+script: CFLAGS="-O2 -Werror $CFLAGS_EXTRA" make pkg
 compiler:
 - clang
 - gcc
 env:
-- CFLAGS="-O2 -Werror"
-- CFLAGS="-O2 -Werror -m32"
+- CFLAGS_EXTRA=
+- CFLAGS_EXTRA=-m32
 addons:
   apt:
     packages:
