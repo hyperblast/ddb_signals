@@ -47,8 +47,7 @@
 
 enum
 {
-    GOT_SIGNAL = 1,
-    GOT_STOP = 2,
+    GOT_STOP = 1,
 };
 
 struct handler_entry
@@ -62,6 +61,7 @@ static struct handler_entry handlers[] =
 {
     { .signum = SIGTERM },
     { .signum = SIGINT },
+    { .signum = SIGHUP },
 };
 
 #define HANDLER_COUNT (sizeof(handlers) / sizeof(handlers[0]))
@@ -111,9 +111,14 @@ static void send_notify(int flag)
     (void) write(notify_pipe[1], "Y", 1);
 }
 
+static inline int signal_flag(int signum)
+{
+    return 1 << (signum + 1);
+}
+
 static void handle_signal(int signum)
 {
-    send_notify(GOT_SIGNAL);
+    send_notify(signal_flag(signum));
 }
 
 static int setup_handlers()
@@ -146,6 +151,50 @@ static void restore_handlers()
             handlers[i].is_set = 0;
         }
     }
+}
+
+static void restart()
+{
+    char exe_path[1024];
+    ssize_t exe_path_size = readlink("/proc/self/exe", exe_path, sizeof(exe_path));
+
+    if (exe_path_size == sizeof(exe_path))
+    {
+        log_error("exe path is too long, aborting restart\n");
+        return;
+    }
+
+    exe_path[exe_path_size] = '\0';
+
+    char* args[] = { exe_path, NULL };
+
+    pid_t pid = getpid();
+
+    switch (fork())
+    {
+    case -1:
+        log_error("fork failed: %s\n", strerror(errno));
+        return;
+
+    case 0:
+        while (kill(pid, 0) == 0)
+            usleep(100000);
+
+        if (errno != ESRCH)
+        {
+            log_error("kill failed: %s\n", strerror(errno));
+            break;
+        }
+
+        execv(exe_path, args);
+        log_error("execl failed: %s\n", strerror(errno));
+        break;
+
+    default:
+        return;
+    }
+
+    exit(1);
 }
 
 static void helper_thread(void* arg)
@@ -181,6 +230,9 @@ static int signals_stop()
 
     restore_handlers();
     close_pipe();
+
+    if (notify_flags & signal_flag(SIGHUP))
+        restart();
 
     return 0;
 }
