@@ -268,7 +268,7 @@ static DB_misc_t plugin_def =
     {
         .api_vmajor = 1,
         .api_vminor = DDB_API_LEVEL,
-        .version_major = 1,
+        .version_major = 2,
         .version_minor = 0,
         .type = DB_PLUGIN_MISC,
         .id = "signals",

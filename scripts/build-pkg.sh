@@ -1,5 +1,9 @@
 #!/bin/bash
 
+pkg_name=ddb_signals
+pkg_version=2.0
+plugin_file=signals.so
+
 set -e
 
 if [ -n "$VERBOSE" ]; then
@@ -12,10 +16,6 @@ root_dir=$(pwd)
 build_dir=$root_dir/build
 pkg_dir=$build_dir/pkg
 
-pkg_name=ddb_signals
-plugin=signals.so
-version=1.0
-
 function clean {
     rm -rf "$pkg_dir"
 }
@@ -25,8 +25,8 @@ if [ "$1" == "--clean" ]; then
     exit 0
 fi
 
-test -e "$build_dir/$plugin"
-file_info=$(file "$build_dir/$plugin")
+test -e "$build_dir/$plugin_file"
+file_info=$(file "$build_dir/$plugin_file")
 
 if echo $file_info | grep 'Intel 80386' > /dev/null; then
     arch=x86
@@ -36,8 +36,10 @@ else
     arch=unknown
 fi
 
+git_rev=$(git rev-parse --short HEAD)
+
 clean
 
 mkdir -p "$pkg_dir"
-tar czf "$pkg_dir/$pkg_name-$version-$arch.tar.gz" -C $build_dir $plugin -C $root_dir LICENSE
+tar czf "$pkg_dir/$pkg_name-$pkg_version-$git_rev-$arch.tar.gz" -C $build_dir $plugin_file -C $root_dir LICENSE
 touch "$pkg_dir/.stamp"
