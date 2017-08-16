@@ -1,6 +1,10 @@
 Signals support plugin for DeaDBeeF music player
 ===
-This plugin adds clean shutdown on `SIGTERM` and `SIGINT` to DeaDBeeF.
+This plugin adds support for unix signals to DeaDBeeF music player.
+
+Features:
+- Clean shutdown on `SIGTERM` and `SIGINT`.
+- Restart player on `SIGHUP`.
 
 [![Build Status](https://travis-ci.org/hyperblast/ddb-signals.svg?branch=master)](https://travis-ci.org/hyperblast/ddb-signals)
 
