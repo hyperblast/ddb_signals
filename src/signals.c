@@ -64,7 +64,7 @@ static struct handler_entry handlers[] =
     { .signum = SIGHUP },
 };
 
-#define HANDLER_COUNT (sizeof(handlers) / sizeof(handlers[0]))
+#define HANDLER_COUNT (int)(sizeof(handlers) / sizeof(handlers[0]))
 
 static DB_functions_t* ddb_api;
 static int notify_flags;
@@ -199,6 +199,8 @@ static void restart()
 
 static void helper_thread(void* arg)
 {
+    (void) arg;
+
 #ifdef __linux__
     prctl(PR_SET_NAME, "signals-helper", 0, 0, 0, 0);
 #endif
