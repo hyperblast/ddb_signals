@@ -1,22 +1,19 @@
 #!/bin/bash
 
-pkg_name=ddb_signals
-pkg_version=2.0
-plugin_file=signals.so
-
 set -e
 
 if [ -n "$VERBOSE" ]; then
     set -v
 fi
 
+source "$(dirname $0)/config.sh"
+cd "$(dirname $0)/.."
+
 if [ -n "$RELEASE" ]; then
     config=release
 else
     config=debug
 fi
-
-cd "$(dirname $0)/.."
 
 root_dir=$(pwd)
 build_dir=$root_dir/build/$config/plugin
