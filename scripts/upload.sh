@@ -3,8 +3,8 @@
 set -e
 
 if [ -z "$UPLOAD_CREDS" ]; then
-    echo '$UPLOAD_CREDS is not defined, unable to continue'
-    exit 1
+    echo '$UPLOAD_CREDS is not defined, skipping upload'
+    exit 0
 fi
 
 source "$(dirname $0)/config.sh"
