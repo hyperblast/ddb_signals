@@ -9,10 +9,10 @@ fi
 cd "$(dirname $0)/.."
 
 function build {
-    CFLAGS="-O2 -Werror $CFLAGS_EXTRA" make clean pkg
+    CFLAGS="$CFLAGS -O2 -Werror" make clean pkg
     mkdir -p build/release
     cp build/pkg/*.tar.gz build/release
 }
 
-CFLAGS_EXTRA= build
-CFLAGS_EXTRA=-m32 build
+CFLAGS= build
+CFLAGS=-m32 build
