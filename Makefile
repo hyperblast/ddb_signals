@@ -1,8 +1,22 @@
 CFLAGS  += -std=c99 -fPIC -Wall -Wextra
 LDFLAGS += -Wl,--no-undefined
 
+ifdef RELEASE
+CONFIG      := release
+CFLAGS      += -O2
+else
+CONFIG      := debug
+CFLAGS      += -O0 -g3
+endif
+
+ifdef WERROR
+CFLAGS      += -Werror
+endif
+
 SOURCES     := src/signals.c
-PLUGIN      := build/signals.so
+BUILD_DIR   := build/$(CONFIG)/plugin
+PLUGIN_FILE := signals.so
+PLUGIN_PATH := $(BUILD_DIR)/$(PLUGIN_FILE)
 DEPS_STAMP  := deps/.stamp
 PKG_STAMP   := build/pkg/.stamp
 DESTDIR     ?= ~/.local/lib/deadbeef
@@ -14,27 +28,27 @@ CFLAGS      += -Ideps
 DEPS_TARGET := $(DEPS_STAMP)
 endif
 
-plugin: $(PLUGIN)
+plugin: $(PLUGIN_PATH)
 
-$(PLUGIN): $(SOURCES) $(DEPS_TARGET)
-	mkdir -p build
-	$(CC) $(CFLAGS) $(LDFLAGS) -shared -o $(PLUGIN) $(SOURCES)
+$(PLUGIN_PATH): $(SOURCES) $(DEPS_TARGET)
+	mkdir -p $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(LDFLAGS) -shared -o $(PLUGIN_PATH) $(SOURCES)
 
 pkg: $(PKG_STAMP)
 
-$(PKG_STAMP): $(PLUGIN) LICENSE scripts/build-pkg.sh
+$(PKG_STAMP): $(PLUGIN_PATH) LICENSE scripts/build-pkg.sh
 	scripts/build-pkg.sh
 
 clean:
-	rm -f $(PLUGIN)
+	rm -f $(PLUGIN_PATH)
 	scripts/build-pkg.sh --clean
 
-install: $(PLUGIN)
+install: $(PLUGIN_PATH)
 	mkdir -p $(DESTDIR)
-	cp -t $(DESTDIR) $(PLUGIN)
+	cp -t $(DESTDIR) $(PLUGIN_PATH)
 
 uninstall:
-	rm $(DESTDIR)/signals.so
+	rm $(DESTDIR)/$(PLUGIN_FILE)
 
 get-deps: $(DEPS_STAMP)
 

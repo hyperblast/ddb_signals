@@ -10,11 +10,17 @@ if [ -n "$VERBOSE" ]; then
     set -v
 fi
 
+if [ -n "$RELEASE" ]; then
+    config=release
+else
+    config=debug
+fi
+
 cd "$(dirname $0)/.."
 
 root_dir=$(pwd)
-build_dir=$root_dir/build
-pkg_dir=$build_dir/pkg
+build_dir=$root_dir/build/$config/plugin
+pkg_dir=$root_dir/build/$config/pkg
 
 function clean {
     rm -rf "$pkg_dir"

@@ -9,4 +9,6 @@ if [ "$CC" = "gcc" ]; then
     export CFLAGS="$CFLAGS -Wno-unused-result"
 fi
 
-VERBOSE=1 CFLAGS="$CFLAGS -O2 -Werror" make pkg
+rm -rf build/release
+
+VERBOSE=1 RELEASE=1 WERROR=1 make pkg
