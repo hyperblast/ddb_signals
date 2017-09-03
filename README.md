@@ -3,7 +3,6 @@ This plugin adds support for unix signals to DeaDBeeF player.
 
 [![License](https://img.shields.io/github/license/hyperblast/ddb_signals.svg)](LICENSE)
 [![Build Status](https://travis-ci.org/hyperblast/ddb_signals.svg?branch=master)](https://travis-ci.org/hyperblast/ddb_signals)
-[![Development builds](https://img.shields.io/badge/development-builds-orange.svg)](https://hyperblast.org/ddb_signals/builds)
 
 ### Features
 - Clean shutdown on `SIGTERM` and `SIGINT`
@@ -17,3 +16,6 @@ This plugin adds support for unix signals to DeaDBeeF player.
 
 ### How to use
 There are no configuration options. Once plugin is activated it will intercept signals and initiate correct player termination.
+
+### Development builds
+Development builds are [available](https://hyperblast.org/ddb_signals/builds).
