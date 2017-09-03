@@ -1,8 +1,8 @@
 # Signals support plugin for DeaDBeeF player
 This plugin adds support for unix signals to DeaDBeeF player.
 
-[![License](https://img.shields.io/github/license/hyperblast/ddb-signals.svg)](LICENSE)
-[![Build Status](https://travis-ci.org/hyperblast/ddb-signals.svg?branch=master)](https://travis-ci.org/hyperblast/ddb-signals)
+[![License](https://img.shields.io/github/license/hyperblast/ddb_signals.svg)](LICENSE)
+[![Build Status](https://travis-ci.org/hyperblast/ddb_signals.svg?branch=master)](https://travis-ci.org/hyperblast/ddb_signals)
 [![Development builds](https://img.shields.io/badge/development-builds-orange.svg)](https://hyperblast.org/ddb_signals/builds)
 
 ### Features
