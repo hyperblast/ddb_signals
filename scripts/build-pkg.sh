@@ -45,4 +45,3 @@ clean
 
 mkdir -p "$pkg_dir"
 tar czf "$pkg_dir/$pkg_name-$pkg_version-$git_rev-$arch.tar.gz" -C $build_dir $plugin_file -C $root_dir LICENSE
-touch "$pkg_dir/.stamp"
