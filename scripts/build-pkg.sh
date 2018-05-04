@@ -44,4 +44,7 @@ git_rev=$(git rev-parse --short HEAD)
 clean
 
 mkdir -p "$pkg_dir"
-tar czf "$pkg_dir/$pkg_name-$pkg_version-$git_rev-$arch.tar.gz" -C $build_dir $plugin_file -C $root_dir LICENSE
+
+tar czf \
+    "$pkg_dir/$pkg_name-$pkg_version-$git_rev-$arch.tar.gz" \
+    -C $build_dir $plugin_file -C $root_dir LICENSE
