@@ -22,7 +22,7 @@
 #endif
 
 #define LICENSE_TEXT \
-    "Copyright 2016-2017 Hyperblast\n" \
+    "Copyright 2016-2018 Hyperblast\n" \
     "\n" \
     "Permission is hereby granted, free of charge, to any person obtaining a copy " \
     "of this software and associated documentation files (the \"Software\"), to deal " \
