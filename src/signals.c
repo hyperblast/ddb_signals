@@ -233,7 +233,8 @@ static int signals_stop()
     restore_handlers();
     close_pipe();
 
-    if (notify_flags & signal_flag(SIGHUP))
+    if ((notify_flags & signal_flag(SIGHUP))
+        && ddb_api->conf_get_int("signals.sighup.restart", 0))
         restart();
 
     return 0;
@@ -277,6 +278,7 @@ static DB_misc_t plugin_def =
         .name = "Unix signals support",
         .descr = "Handles SIGTERM, SIGINT and SIGHUP unix signals",
         .website = "https://github.com/hyperblast/ddb_signals",
+        .configdialog = "property \"Restart on SIGHUP\" checkbox signals.sighup.restart 0;\n",
         .copyright = LICENSE_TEXT,
         .start = signals_start,
         .stop = signals_stop,
