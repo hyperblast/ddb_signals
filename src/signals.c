@@ -43,7 +43,7 @@
     "THE SOFTWARE.\n"
 
 #define atomic_or(ptr, val) __sync_fetch_and_or((ptr), (val))
-#define log_error(...) fprintf(stderr, "signals: " __VA_ARGS__)
+#define log_msg(...) fprintf(stderr, "signals: " __VA_ARGS__)
 
 enum
 {
@@ -55,13 +55,14 @@ struct handler_entry
     int signum;
     int is_set;
     struct sigaction old_action;
+    const char* name;
 };
 
 static struct handler_entry handlers[] =
 {
-    { .signum = SIGTERM },
-    { .signum = SIGINT },
-    { .signum = SIGHUP },
+    { .signum = SIGTERM, .name = "SIGTERM" },
+    { .signum = SIGINT, .name = "SIGINT" },
+    { .signum = SIGHUP, .name = "SIGHUP" },
 };
 
 #define HANDLER_COUNT (int)(sizeof(handlers) / sizeof(handlers[0]))
@@ -75,14 +76,14 @@ static int create_pipe()
 {
     if (pipe(notify_pipe) < 0)
     {
-        log_error("pipe failed: %s\n", strerror(errno));
+        log_msg("pipe failed: %s\n", strerror(errno));
         return -1;
     }
 
     if (fcntl(notify_pipe[0], F_SETFD, O_NONBLOCK | FD_CLOEXEC) < 0 ||
         fcntl(notify_pipe[1], F_SETFD, O_NONBLOCK | FD_CLOEXEC) < 0)
     {
-        log_error("fcntl failed: %s\n", strerror(errno));
+        log_msg("fcntl failed: %s\n", strerror(errno));
         return -1;
     }
 
@@ -131,7 +132,7 @@ static int setup_handlers()
     {
         if (sigaction(handlers[i].signum, &action, &handlers[i].old_action) < 0)
         {
-            log_error("sigaction failed: %s\n", strerror(errno));
+            log_msg("sigaction failed: %s\n", strerror(errno));
             return -1;
         }
 
@@ -160,7 +161,7 @@ static void restart()
 
     if (exe_path_size == sizeof(exe_path))
     {
-        log_error("exe path is too long, aborting restart\n");
+        log_msg("exe path is too long, aborting restart\n");
         return;
     }
 
@@ -173,7 +174,7 @@ static void restart()
     switch (fork())
     {
     case -1:
-        log_error("fork failed: %s\n", strerror(errno));
+        log_msg("fork failed: %s\n", strerror(errno));
         return;
 
     case 0:
@@ -182,12 +183,12 @@ static void restart()
 
         if (errno != ESRCH)
         {
-            log_error("kill failed: %s\n", strerror(errno));
+            log_msg("kill failed: %s\n", strerror(errno));
             break;
         }
 
         execv(exe_path, args);
-        log_error("execl failed: %s\n", strerror(errno));
+        log_msg("execl failed: %s\n", strerror(errno));
         break;
 
     default:
@@ -215,6 +216,12 @@ static void helper_thread(void* arg)
         select(notify_pipe[0] + 1, &set, NULL, NULL, NULL);
 
         flags = atomic_or(&notify_flags, 0);
+    }
+
+    for (int i = 0; i < HANDLER_COUNT; i++)
+    {
+        if (flags & signal_flag(handlers[i].signum))
+            log_msg("got %s\n", handlers[i].name);
     }
 
     if (!(flags & GOT_STOP))
