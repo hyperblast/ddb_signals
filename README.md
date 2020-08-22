@@ -2,7 +2,7 @@
 This plugin adds support for unix signals to [DeaDBeeF player](http://deadbeef.sourceforge.net/).
 
 [![License](https://img.shields.io/github/license/hyperblast/ddb_signals.svg)](LICENSE)
-[![Build Status](https://travis-ci.org/hyperblast/ddb_signals.svg?branch=master)](https://travis-ci.org/hyperblast/ddb_signals)
+[![Build Status](https://travis-ci.com/hyperblast/ddb_signals.svg?branch=master)](https://travis-ci.com/hyperblast/ddb_signals)
 
 ### Features
 - Clean shutdown on `SIGTERM` and `SIGINT`
