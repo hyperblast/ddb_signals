@@ -21,6 +21,3 @@ This plugin adds support for unix signals to [DeaDBeeF player](http://deadbeef.s
 
 ### How to use
 There are no configuration options. Once plugin is activated it will intercept signals and initiate correct player termination.
-
-### Development builds
-Development builds are [available](https://hyperblast.org/ddb_signals/builds).
