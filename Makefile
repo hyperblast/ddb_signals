@@ -1,4 +1,4 @@
-CFLAGS  += -std=c99 -fPIC -Wall -Wextra -Iinclude
+CFLAGS  += -std=c99 -fPIC -Wall -Wextra -Wno-unused-result -Iinclude
 LDFLAGS += -Wl,--no-undefined
 
 ifdef RELEASE
